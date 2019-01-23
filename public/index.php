@@ -79,7 +79,7 @@ switch($numero){
                 controlador()->acercade();
                 break;
             case "noticias":
-                controlador()->$array_ruta[0]();
+                controlador()->noticias();
                 break;
             case "panel":
                 controlador("usuarios")->entrar();
@@ -134,7 +134,8 @@ switch($numero){
             case "panel/noticias/borrar":
             case "panel/noticias/home":
             case "panel/noticias/subir":
-                controlador($array_ruta[1])->$array_ruta[2]($array_ruta[3]);
+                $accion = $array_ruta[2];
+                controlador($array_ruta[1])->$accion($array_ruta[3]);
                 break;
             default:
                 controlador()->index();

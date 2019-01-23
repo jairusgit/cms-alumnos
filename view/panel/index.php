@@ -1,7 +1,1 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: jairogarciarincon
- * Date: 11/01/2019
- * Time: 19:42
- */
+Bienvenido <strong><?php echo $_SESSION['usuario']->usuario ?></strong>,<br>pulsa una opción del menú para continuar.
