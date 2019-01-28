@@ -48,7 +48,7 @@ class UsuarioController
         //Creo un nuevo usuario vacío
         $usuario = new Usuario();
 
-        //Llamar a la ventana de edición
+        //Llamo a la ventana de edición
         $this->view->vistas("panel","usuarios/editar", $usuario);
 
 
@@ -59,6 +59,80 @@ class UsuarioController
     }
 
     public function editar($id){
+
+        if (isset($_POST["guardar"])){
+
+            //Recupero los datos del formulario
+            $usuario = filter_input(INPUT_POST, "usuario", FILTER_SANITIZE_STRING);
+            $clave = filter_input(INPUT_POST, "clave", FILTER_SANITIZE_STRING);
+            $usuarios = (filter_input(INPUT_POST, 'usuarios', FILTER_SANITIZE_STRING) == 'on') ? 1 : 0;
+            $noticias = (filter_input(INPUT_POST, 'noticias', FILTER_SANITIZE_STRING) == 'on') ? 1 : 0;
+
+            //Encripto la clave
+            $clave_encriptada = crypt($clave);
+
+            if ($id == "nuevo"){
+                //Creo un nuevo usuario
+                $consulta = $this->db->exec("INSERT INTO usuarios (usuario, clave, noticias, usuarios) VALUES ('$usuario','$clave_encriptada',$noticias,$usuarios)");
+                //Mensaje y redirección
+                if ($consulta > 0){
+                    $mensajes = array(
+                        array(
+                            "tipo" => "success",
+                            "mensaje" => "El usuario <strong>$usuario</strong> se creado correctamente."
+                        )
+                    );
+                }
+                else{
+                    $mensajes = array(
+                        array(
+                            "tipo" => "danger",
+                            "mensaje" => "Hubo un error al guardar en la base de datos."
+                        )
+                    );
+                }
+
+                $_SESSION["mensajes"] = $mensajes;
+                header("Location:".$_SESSION["home"]."panel/usuarios");
+
+            }
+            else{
+                //Actualizo el usuario
+                $consulta = $this->db->exec("UPDATE usuarios SET usuario='$usuario',clave='$clave_encriptada',noticias=$noticias,usuarios=$usuarios WHERE id='$id'");
+                //Mensaje y redirección
+                if ($consulta > 0){
+                    $mensajes = array(
+                        array(
+                            "tipo" => "success",
+                            "mensaje" => "El usuario <strong>$usuario</strong> se actualizado correctamente."
+                        )
+                    );
+                }
+                else{
+                    $mensajes = array(
+                        array(
+                            "tipo" => "danger",
+                            "mensaje" => "Hubo un error al guardar en la base de datos."
+                        )
+                    );
+                }
+
+                $_SESSION["mensajes"] = $mensajes;
+                header("Location:".$_SESSION["home"]."panel/usuarios");
+
+            }
+
+        }
+        else{
+            //Obtengo el usuario
+            $resultado = $this->db->query("SELECT * FROM usuarios WHERE id='$id'");
+            $usuario = $resultado->fetchObject();
+
+            //Llamo a la ventana de edición
+            $this->view->vistas("panel","usuarios/editar", $usuario);
+        }
+
+
 
     }
 

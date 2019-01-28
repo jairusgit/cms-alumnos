@@ -1,17 +1,19 @@
 <div class="container-fluid">
     <!--Cabecera e iconos-->
     <div class="row">
-        <h3 class="col-9">editar usuario</h3>
+        <h3 class="col-9"><?php echo ($datos->id) ? "editar " : "crear " ?> usuario</h3>
         <div class="col-3 iconos text-right">
             <a href="<?php echo $_SESSION['home'] ?>panel/usuarios" title="volver">
                 <i class="fas fa-undo-alt"></i>
             </a>
-            <a href="<?php echo $_SESSION['home'] ?>panel/usuarios/editar" title="guardar">
+            <a onclick="editar.submit()" title="guardar">
                 <i class="far fa-save"></i>
             </a>
         </div>
     </div>
-    <form method="POST" action="<?php echo $_SESSION['home'] ?>panel/usuarios/editar">
+    <?php $id = ($datos->id) ? $datos->id : "nuevo" ?>
+    <form method="POST" name="editar" action="<?php echo $_SESSION['home'] ?>panel/usuarios/editar/<?php echo $id ?>">
+        <input type="hidden" name="guardar" value="si">
         <div class="row edicion">
             <div class="col-6">
                 <strong>Usuario:</strong><br>
