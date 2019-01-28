@@ -9,6 +9,7 @@ namespace App\Controller;
 
 use App\Helper\ViewHelper;
 use App\Helper\DbHelper;
+use App\Model\Usuario;
 
 class UsuarioController
 {
@@ -25,14 +26,31 @@ class UsuarioController
 
     }
 
-    public function index(){
+    //Le llevo a la página de inicio de panel
+    public function inicio(){
 
-        //Le llevo a la página de inicio de panel
         $this->view->vistas("panel","index");
 
     }
 
+    //Listado de usuarios
+    public function index(){
+
+        //Recojo los usuarios de la base de datos
+        $datos = $this->db->query("SELECT * FROM usuarios");
+
+        $this->view->vistas("panel","usuarios/index", $datos);
+
+    }
+
     public function crear(){
+
+        //Creo un nuevo usuario vacío
+        $usuario = new Usuario();
+
+        //Llamar a la ventana de edición
+        $this->view->vistas("panel","usuarios/editar", $usuario);
+
 
     }
 
@@ -53,7 +71,7 @@ class UsuarioController
         if (isset($_SESSION['usuario'])){
 
             //Le llevo a la página de inicio del panel
-            $this->index();
+            $this->inicio();
 
         }
         else if (isset($_POST["acceder"])){
