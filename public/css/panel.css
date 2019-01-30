@@ -12,6 +12,12 @@ a:hover{
     text-decoration: none;
 }
 
+a:not([href]):not([tabindex]) {
+    color: inherit;
+    text-decoration: inherit;
+    cursor: pointer;
+}
+
 .container-fluid{
     min-height: 600px;
 }
@@ -41,4 +47,30 @@ a:hover{
 .item_listado{
     padding: 0.3em 0;
     border-bottom: 1px solid #CCC;
+}
+
+.mensaje_borrar{
+    font-size: 0.8em;
+    padding: 0.3em;
+    text-align: right;
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #856404;
+    border-radius: 5px;
+    display: none;
+}
+
+
+.no-gutters>.col-12.mensaje_borrar {
+    padding: 0.3em;
+}
+
+.mensaje_borrar a,
+.mensaje_borrar a:hover,
+.mensaje_borrar a.boton_borrar,
+.mensaje_borrar a:hover.boton_borrar{
+    color: #856404;
+    text-decoration: underline;
+    padding: 0 0.2em;
+    cursor: pointer;
 }

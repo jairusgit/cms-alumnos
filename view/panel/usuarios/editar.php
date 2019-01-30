@@ -19,7 +19,13 @@
                 <strong>Usuario:</strong><br>
                 <input type="text" name="usuario" value="<?php echo $datos->usuario ?>" autocomplete="off"><br><br>
                 <strong>Clave:</strong><br>
-                <input type="password" name="clave" value="<?php echo $datos->clave ?>" autocomplete="off">
+                <?php $clase = ($datos->id) ? "" : "d-none" ?>
+                <span class="<?php echo $clase ?>">
+                    <input type="checkbox" name="cambiar_clave"> Pincha para cambiar la clave<br>
+                </span>
+                <?php $clase2 = ($datos->id) ? "d-none" : "" ?>
+                <input type="password" name="clave" autocomplete="off" class="<?php echo $clase2 ?>">
+
             </div>
             <div class="col-6">
                 <strong>Último acceso:</strong><br>

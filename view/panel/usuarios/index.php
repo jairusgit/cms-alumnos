@@ -38,9 +38,18 @@
                     <i class="far fa-thumbs-<?php echo $icono ?>"></i>
                 </a>
                 <!--borrar-->
-                <a href="<?php echo $_SESSION['home'] ?>panel/usuarios/borrar/<?php echo $usuario->id ?>" title="borrar usuario">
+                <a class="boton_borrar" data-id="<?php echo $usuario->id ?>" title="borrar usuario">
                     <i class="far fa-trash-alt"></i>
                 </a>
+            </div>
+            <!--mensaje borrar-->
+            <div class="col-12 mensaje_borrar" id="<?php echo $usuario->id ?>">
+                ¿Seguro que desea borrar al usuario <strong><?php echo $usuario->usuario ?></strong>?<br>
+                Esta acción no se puede deshacer.<br>
+                <a href="<?php echo $_SESSION['home'] ?>panel/usuarios/borrar/<?php echo $usuario->id ?>" title="borrar usuario">
+                    Borrar
+                </a>
+                <a class="boton_borrar" data-id="<?php echo $usuario->id ?>">Cancelar</a>
             </div>
         </div>
     <?php } ?>
