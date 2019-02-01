@@ -74,3 +74,12 @@ a:not([href]):not([tabindex]) {
     padding: 0 0.2em;
     cursor: pointer;
 }
+
+textarea{
+    resize: none;
+    width: 100%;
+}
+
+footer{
+    margin-top: 3em;
+}
