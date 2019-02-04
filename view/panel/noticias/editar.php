@@ -38,9 +38,14 @@
     </form>
     <!--Formulario de subida de imagen-->
     <?php if ($datos->id){ ?>
-        <form method="POST" name="subir" action="<?php echo $_SESSION['home'] ?>panel/noticias/subir/<?php echo $id ?>">
+        <form enctype="multipart/form-data" method="POST" name="subir" action="<?php echo $_SESSION['home'] ?>panel/noticias/subir/<?php echo $id ?>">
             <strong>Imagen:</strong><br>
-            <input type="file" name="image">
+            <input type="file" name="imagen">
+            <!--Muestro la imagen de la noticia si la tiene-->
+            <?php if (is_file($_SESSION['public']."img/".$id.".jpg")){ ?>
+                <img src="<?php echo $_SESSION['public']."img/".$id.".jpg" ?>">
+            <?php } ?>
+            <br><br><input type="submit" name="subir" value="Subir">
         </form>
     <?php } ?>
 

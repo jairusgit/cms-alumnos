@@ -166,6 +166,19 @@ class NoticiaController
 
     public function subir($id){
 
+        if (isset($_POST['subir'])){
+
+            $imagen_recibida = $_FILES['imagen'];
+            $directorio_subida = $_SESSION['public']."img/";
+            $imagen_subida = $directorio_subida.$id.".jpg";
+
+            if (is_uploaded_file($imagen_recibida['tmp_name']) AND move_uploaded_file($imagen_recibida['tmp_name'], $imagen_subida)) {
+                $this->view->mensajeYRedireccion("panel/noticias/editar/".$id,"success","La imagen se ha subido correctamente.");
+            } else {
+                $this->view->mensajeYRedireccion("panel/noticias/editar/".$id,"danger","Hubo un problema al subir la imagen.");
+            }
+        }
+
     }
 
     public function borrar($id){
