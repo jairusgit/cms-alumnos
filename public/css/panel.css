@@ -83,3 +83,13 @@ textarea{
 footer{
     margin-top: 3em;
 }
+
+.imagen img{
+    margin: 2em 0 0 0;
+    width: 50%;
+}
+
+.imagen_mini img{
+    width: 100%;
+    padding: 0.5em 1em 0.5em 0;
+}

@@ -20,7 +20,13 @@
     <!--Recorro las noticias-->
     <?php while ($noticia = $datos->fetchObject()){ ?>
         <div class="row item_listado no-gutters">
-            <div class="col-9">
+            <div class="col-1 imagen_mini">
+                <!--Imagen de la noticia (si la hay-->
+                <?php if (is_file($_SESSION['img'].$noticia->id.".jpg")){ ?>
+                    <img src="<?php echo $_SESSION['public']."img/".$noticia->id.".jpg" ?>">
+                <?php } ?>
+            </div>
+            <div class="col-8">
                 <!--Nombre de noticia y enlace a editar-->
                 <a href="<?php echo $_SESSION['home'] ?>panel/noticias/editar/<?php echo $noticia->id ?>" title="editar noticia">
                     <?php echo $noticia->titulo ?>

@@ -11,4 +11,7 @@ $(document).ready(function(){
         $("input[type=password]").toggleClass( "d-none" );
     });
 
+    //wysiwig
+    $('.editor').summernote();
+
 });

@@ -10,6 +10,9 @@ use App\Controller\UsuarioController;
 $_SESSION['public'] = '/jairo/daw/2018-19/cms-alumnos/public/';
 $_SESSION['home'] = $_SESSION['public'].'index.php/';
 
+//Asigno a la sesión la ruta de la carpeta de imagenes
+$_SESSION['img'] = '/var/www/html'.$_SESSION['public']."img/";
+
 //Defino la función que autocargará las clases cuando se instancien
 spl_autoload_register('App\autoload');
 
@@ -65,7 +68,6 @@ $numero = count($array_ruta);
     /panel/noticias/activar/id
     /panel/noticias/home/id
     /panel/noticias/borrar/id
-    /panel/noticias/subir/id
 
  */
 switch($numero){
@@ -133,7 +135,6 @@ switch($numero){
             case "panel/noticias/activar":
             case "panel/noticias/borrar":
             case "panel/noticias/home":
-            case "panel/noticias/subir":
                 $accion = $array_ruta[2];
                 controlador($array_ruta[1])->$accion($array_ruta[3]);
                 break;

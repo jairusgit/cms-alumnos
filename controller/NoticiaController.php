@@ -63,11 +63,15 @@ class NoticiaController
             $entradilla = filter_input(INPUT_POST, "entradilla", FILTER_SANITIZE_STRING);
             $autor = filter_input(INPUT_POST, "autor", FILTER_SANITIZE_STRING);
             $fecha = filter_input(INPUT_POST, "fecha", FILTER_SANITIZE_STRING);
-            $texto = filter_input(INPUT_POST, "texto", FILTER_SANITIZE_STRING);
+            $texto = filter_input(INPUT_POST, "texto", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             //Genero el slug
             $slug = $this->view->getSlug($titulo);
             //Chequeo el slug
-            $slug = $this->checkSlug($slug,$id);
+            //$slug = $this->checkSlug($slug,$id);
+            //Imagen
+            $imagen_recibida = $_FILES['imagen'];
+            $imagen_subida = $_SESSION['img'].$id.".jpg";
+            $texto_img = "";
 
 
             if ($id == "nuevo"){
@@ -81,10 +85,15 @@ class NoticiaController
             else{
                 //Actualizo la noticia
                 $consulta = $this->db->exec("UPDATE noticias SET titulo='$titulo',entradilla='$entradilla',autor='$autor',fecha='$fecha',texto='$texto',slug='$slug' WHERE id='$id'");
+                //Subo la imagen
+                if (is_uploaded_file($imagen_recibida['tmp_name'])){
+                    $texto_img = (move_uploaded_file($imagen_recibida['tmp_name'], $imagen_subida)) ?
+                        " La imagen se ha subido correctamente." : " Hubo un problema al subir la imagen.";
+                }
                 //Mensaje y redirección
                 ($consulta > 0) ?
-                    $this->view->mensajeYRedireccion("panel/noticias","success","La noticia <strong>$titulo</strong> se actualizado correctamente.") :
-                    $this->view->mensajeYRedireccion("panel/noticias","danger","Hubo un error al guardar en la base de datos.");
+                    $this->view->mensajeYRedireccion("panel/noticias","success","La noticia <strong>$titulo</strong> se actualizado correctamente.".$texto_img) :
+                    $this->view->mensajeYRedireccion("panel/noticias","danger","Hubo un error al guardar en la base de datos.".$texto_img);
             }
         }
         else{
@@ -102,7 +111,7 @@ class NoticiaController
 
 
         $resultado = $this->db->query("SELECT * FROM noticias WHERE slug='$slug' AND id!='$id'");
-        return (!$resultado->fetchObject()) ? $slug : $slug."-".$id;
+        return ($resultado->rowCount()>0) ? $slug."-".$id : $slug;
 
     }
 
@@ -164,22 +173,7 @@ class NoticiaController
 
     }
 
-    public function subir($id){
 
-        if (isset($_POST['subir'])){
-
-            $imagen_recibida = $_FILES['imagen'];
-            $directorio_subida = $_SESSION['public']."img/";
-            $imagen_subida = $directorio_subida.$id.".jpg";
-
-            if (is_uploaded_file($imagen_recibida['tmp_name']) AND move_uploaded_file($imagen_recibida['tmp_name'], $imagen_subida)) {
-                $this->view->mensajeYRedireccion("panel/noticias/editar/".$id,"success","La imagen se ha subido correctamente.");
-            } else {
-                $this->view->mensajeYRedireccion("panel/noticias/editar/".$id,"danger","Hubo un problema al subir la imagen.");
-            }
-        }
-
-    }
 
     public function borrar($id){
 
